@@ -22,6 +22,7 @@ void gotoxy(int xpos, int ypos)
 
 	SetConsoleCursorPosition(hOuput, scrn);
 }
+
 class Setting{
 public:
 	  HWND hwnd;
@@ -39,20 +40,33 @@ class Zastavka{
 public:
 	int x;
 	int y;
+	void Saturn(){
+		printf("     *******   \n");
+		printf("   ************   \n");
+		printf("  **************   \n");
+		printf("  **************   \n");
+		printf("   ************    \n");
+		printf("      ****** \n");
+	}
 	void Begin(){
 		double k = -10;
-		while (k<10)
+		Saturn();
+		while (true)
 		{
-			Function(k);
-			    gotoxy(x, y); printf(".");
-			k += 0.5;
-			Sleep(10);
+
+			while (k < 10)
+			{
+				Function(k);
+				gotoxy(x, y); printf("*");
+				k += 0.5;
+				Sleep(10);
+			}
 		}
 		_getch();
 	}
 	void Color()
 	{
-		SetCol
+		 
 	}
 	void Cls(){
 		system("cls");
@@ -68,10 +82,11 @@ public:
 	int KeyUp;
 	int pozitsiya;
 	int GN;
+	int k = 0;
 	void Start(int N){
 		pozitsiya = 0;
 		GN = N;
-		while (true)
+		while (k != 1)
 		{
 			Ctrelca();
 			Switsw();
@@ -97,8 +112,8 @@ public:
 		case 72:pozitsiya--; break; //кнопка вверх
 
 		case 80:pozitsiya++; break; //кнопка вниз
-		default:
-
+		case 13: k = 1;
+			return;
 			break;
 		}
 		// ограниченыя стрелки(>), нужно для того чтобы но не выходила за пределы пунктов меню
@@ -107,28 +122,67 @@ public:
 
 	}
 };
+class Avtor{
+public:
+	void start(){
+		printf("            МИНИСТЕРСТВО ОБРАЗОВАНИЯ И НАУКИ РОССИЙСКОЙ ФЕДЕРАЦИИ\n              Омский государственный технический университет ");
+		printf("\n\n\n               <Кафедра Информатики и вычислительной техники>");
+		printf("\n \n                                  КУРСОВОЙ ПРОЕКТ ");
+		printf("\n \n                             Работа с мышью и звуком");
+		printf("\n\n\n\n                                        Руководитель проекта: Шафеева О.П.");
+		printf("\n                                        Разработал студент: Игнатьева A.");
+
+		_getch();
+	}
+};
 class Record{
 public:
 	char Name[10];
 	char Info[40][10];
 	int count;
 };
+char a[30];
 class Catalog{
 public:
 	FILE * file;
-	char *fileName;
+	string fileName;
 	vector<Record> record;
+	vector<char *> FileList;
 	void Start(){
-		OpenFile();
-		LoadCatalog();
-		PrintRecordList();
+		if (!fileName[0]){
+			printf("Ошибка:невыбран каталог");
+			_getch();
+		}
+		else{
+			OpenFile(fileName);
+			if (record.size()==0){
+				LoadCatalog();
+			}
+			PrintRecordList();
+		}
 	}
-	void OpenFile(){
-		file = fopen("test.txt", "rt");
+	void OpenFile(string Name){
+		file = fopen(Name.c_str(), "r");
 	}
-	void NewCatalog(char Name[]){
-		file = fopen(Name, "wt");
+	void NewCatalog(){
+		char name[30];
+		printf("Имя каталога(ж/л на Английском):");
+		scanf("%s", &name);
+		file = fopen(name, "wt");
+		fclose(file);
 	}
+		void LoadSettingFile(){
+			OpenFile("File.txt");
+			char temp[30];
+			while (!feof(file))
+			{
+				fscanf(file, "%s", &temp);
+				FileList.push_back(temp);
+			}
+			fclose(file);
+			PrintCatalogist();
+		}
+	
 	void NewRecord(){
 		Record temp;
 		printf("Название планеты:");
@@ -146,7 +200,19 @@ public:
 			gotoxy(10, i); printf("%s", record[i].Name);
 		}
 		d.Start(record.size());
+		system("cls");
+		PrintRecord(d.pozitsiya);
+		_getch();
 	}
+	void PrintCatalogist(){
+		display d;
+		for (int i = 0; i < FileList.size(); i++){
+			gotoxy(10, i); printf("%s", FileList[i]);
+		}
+		d.Start(FileList.size());
+		fileName = FileList[d.pozitsiya];
+	}
+
 	void PrintRecord(int N){
 		for (int i = 0; i < record[N].count; i++){
 			printf("%s ", record[N].Info[i]);
@@ -201,16 +267,17 @@ class Menu{
 		}
 
 		void Switsw2(){
+			Clear();
 			switch (pozitsiya){
-			case 4:
-				Clear();
-				c.Start(); break;
-				case 5:
-				case 6:
-				case 7:
-				case 8:
-				case 9:break;
+			case 4:c.Start();break;
+		    case 5:c.NewCatalog(); break;
+			case 6:c.LoadSettingFile(); break;
+			case 7: break;
+			case 8: Avtor atv; atv.start(); break;
+				case 9:exit(0); break;
 			}
+			Clear();
+			Lable();
 		}
 		void Clear()
 		{
@@ -251,11 +318,12 @@ int _tmain(int argc, _TCHAR* argv[])
 {
 	Setting Nastaroica;
 	Nastaroica.Start();
-//	Menu menu;
-	//menu.Start();
+	Menu menu;
+	menu.Start();
+	//Avtor avt;
 	//_getch();
-	Zastavka Zas;
-	Zas.Begin();
+	//Zastavka Zas;
+	//Zas.Begin();
 	return 0;
 }
 
