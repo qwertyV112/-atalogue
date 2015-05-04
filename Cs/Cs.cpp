@@ -11,6 +11,8 @@
 #include <vector>
 using namespace std;
 #pragma warning(disable: 4996)
+HWND hwnd;
+HDC hdc;
 
 void gotoxy(int xpos, int ypos)
 {
@@ -25,8 +27,7 @@ void gotoxy(int xpos, int ypos)
 
 class Setting{
 public:
-	  HWND hwnd;
-	  HDC hdc;
+
 	void Start(){
 		char Title[] = "RgR";
 		SetConsoleTitle(L"RgR");
@@ -38,43 +39,50 @@ public:
 };
 class Zastavka{
 public:
-	int x;
-	int y;
-	void Saturn(){
-		printf("     *******   \n");
-		printf("   ************   \n");
-		printf("  **************   \n");
-		printf("  **************   \n");
-		printf("   ************    \n");
-		printf("      ****** \n");
+	int Key;
+	HBRUSH hBrush;
+	void krug(float x, float y){
+		Ellipse(hdc, x, y, x+5, y+5);
+	}
+	void Color(int k){
+		hBrush = CreateSolidBrush(RGB(k, 0, 0));
+		SelectObject(hdc, hBrush);
+	}
+	void Saturn(int m){
+		for (float t = -22; t < 2*3.14; t += 0.05){
+			float x = 16 * pow(sin(t), 3);	
+			float y = 13 * cos(t) - 5 * cos(2 * t) - 2 * cos(3 * t) - cos(4 * t);
+			krug((x * -m) + 200, (y * -m) + 100);
+		}
+
+	}
+	int SetingKey(){
+		return GetKeyState(VK_ESCAPE);
+	}
+	bool GetKey(){
+		int i = GetKeyState(VK_ESCAPE);
+		if (Key != i) return false;
+		else true;
 	}
 	void Begin(){
-		double k = -10;
-		Saturn();
-		while (true)
+		Key = SetingKey();
+		float f = -1.14;
+		while (GetKey())
 		{
-
-			while (k < 10)
-			{
-				Function(k);
-				gotoxy(x, y); printf("*");
-				k += 0.5;
-				Sleep(10);
-			}
+			float k = sin(f);
+			f += 0.05;
+			if (f > 3.14) f = -3.14;
+			Color(255);
+			Saturn(fabs(k) * 10);
+			Color(0);
+			Sleep(20);
+			Rectangle(hdc, 0, 0, 400,500);
 		}
-		_getch();
+	_getch();
 	}
-	void Color()
-	{
-		 
-	}
+
 	void Cls(){
 		system("cls");
-	}
-	void Function(double t){
-		x = (cos(t)+2)*20;
-		y = (sin(t)+2)*5;
-		 //printf("%d %d\n", x, y);
 	}
 };
 class display{
@@ -318,12 +326,12 @@ int _tmain(int argc, _TCHAR* argv[])
 {
 	Setting Nastaroica;
 	Nastaroica.Start();
-	Menu menu;
-	menu.Start();
+	//Menu menu;
+	//menu.Start();
 	//Avtor avt;
 	//_getch();
-	//Zastavka Zas;
-	//Zas.Begin();
+	Zastavka Zas;
+	Zas.Begin();
 	return 0;
 }
 
