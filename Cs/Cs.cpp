@@ -52,15 +52,15 @@ public:
 		for (float t = -22; t < 2*3.14; t += 0.05){
 			float x = 16 * pow(sin(t), 3);	
 			float y = 13 * cos(t) - 5 * cos(2 * t) - 2 * cos(3 * t) - cos(4 * t);
-			krug((x * -m) + 200, (y * -m) + 100);
+			krug((x * -m) + 300, (y * -m) + 130);
 		}
 
 	}
 	int SetingKey(){
-		return GetKeyState(VK_ESCAPE);
+		return GetKeyState(VK_RETURN);
 	}
 	bool GetKey(){
-		int i = GetKeyState(VK_ESCAPE);
+		int i = SetingKey();
 		if (Key != i) return false;
 		else true;
 	}
@@ -70,13 +70,13 @@ public:
 		while (GetKey())
 		{
 			float k = sin(f);
-			f += 0.05;
+			f += 0.08;
 			if (f > 3.14) f = -3.14;
 			Color(255);
 			Saturn(fabs(k) * 10);
 			Color(0);
 			Sleep(20);
-			Rectangle(hdc, 0, 0, 400,500);
+			Rectangle(hdc, 0, 0, 700,500);
 		}
 	_getch();
 	}
@@ -181,22 +181,49 @@ public:
 	}
 		void LoadSettingFile(){
 			OpenFile("File.txt");
-			char temp[30];
+			char  temp[30];
 			while (!feof(file))
 			{
+				
 				fscanf(file, "%s", &temp);
 				FileList.push_back(temp);
 			}
 			fclose(file);
 			PrintCatalogist();
 		}
-	
+Record Preobrazov(char S[], Record ctukt){
+			const char separator[] = " "; //Символы-разделители строки
+			char *Ptr = NULL; //Указатель для функции strtok
+
+			Ptr = strtok(S, separator);
+			int j= 0;
+			while (Ptr)
+			{
+				strcpy(ctukt.Info[j],Ptr);
+				Ptr = strtok(0, separator);
+				j++;
+			}
+			strcpy(ctukt.Info[j + 1], " }");
+			ctukt.count = j+1;
+			return ctukt;
+		}
 	void NewRecord(){
+		char t = ' ';
+		char Text[255];
 		Record temp;
 		printf("Название планеты:");
 		scanf("%s", temp.Name);
 		printf("Описание:");
-		scanf("%s", temp.Info);
+		int i = 0;
+		while (t !=VK_RETURN)
+		{
+			t = _getch();
+			printf("%c", t);
+			i++;
+			Text[i] = t;
+		}
+		Text[i + 1] = '\0';
+		temp =Preobrazov(Text,temp);
 		record.push_back(temp);
 	}
 	void RecordDelete(int i){
@@ -243,10 +270,22 @@ public:
 				if (TempRecord.Info[j][0] == '}'){ break; }
 				j++;
 			}
-			TempRecord.count = j;
+			TempRecord.count = j+1;
 
 			i++;
 			record.push_back(TempRecord);
+		}
+	}
+	void SaveCatalog(){
+		file = fopen(fileName.c_str(), "w");
+		for (int i = 0; i < record.size(); i++)
+		{
+			fprintf(file, "%s\n", record[i].Name);
+			for (int j = 0; j < record[i].count; j++)
+			{
+				fprintf(file, "%s ", record[i].Info[j]);
+			}
+			fprintf(file, "\n");
 		}
 	}
 };
@@ -278,11 +317,16 @@ class Menu{
 			Clear();
 			switch (pozitsiya){
 			case 4:c.Start();break;
-		    case 5:c.NewCatalog(); break;
+		    case 5:c.NewRecord(); break;
 			case 6:c.LoadSettingFile(); break;
-			case 7: break;
+			case 7: Zastavka Zas; Zas.Begin();break;
 			case 8: Avtor atv; atv.start(); break;
-				case 9:exit(0); break;
+			case 9: 
+				if (c.fileName[0]){
+					c.SaveCatalog();
+				}
+				exit(0);
+				break;
 			}
 			Clear();
 			Lable();
@@ -326,12 +370,12 @@ int _tmain(int argc, _TCHAR* argv[])
 {
 	Setting Nastaroica;
 	Nastaroica.Start();
-	//Menu menu;
-	//menu.Start();
+	Menu menu;
+	menu.Start();
 	//Avtor avt;
 	//_getch();
-	Zastavka Zas;
-	Zas.Begin();
-	return 0;
+//	Zastavka Zas;
+	//Zas.Begin();
+	
 }
 
