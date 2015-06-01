@@ -1,0 +1,27 @@
+﻿Сборка начата 01.06.2015 10:01:49.
+     1>Проект "C:\Git\atalogue\Cs\Cs.vcxproj" в узле 2 (целевые объекты Build).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Release\Cs.pch" /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Cs.cpp
+         Cs.cpp
+     1>Cs.cpp(45): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+     1>Cs.cpp(52): warning C4305: +=: усечение из "double" к "float"
+     1>Cs.cpp(69): warning C4305: инициализация: усечение из "double" к "float"
+     1>Cs.cpp(73): warning C4305: +=: усечение из "double" к "float"
+     1>Cs.cpp(74): warning C4305: =: усечение из "double" к "float"
+     1>Cs.cpp(76): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+     1>Cs.cpp(239): warning C4018: <: несоответствие типов со знаком и без знака
+     1>Cs.cpp(251): warning C4018: <: несоответствие типов со знаком и без знака
+     1>Cs.cpp(291): warning C4018: <: несоответствие типов со знаком и без знака
+     1>Cs.cpp(328): warning C4018: <: несоответствие типов со знаком и без знака
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Git\atalogue\Release\Cs.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Git\atalogue\Release\Cs.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Git\atalogue\Release\Cs.lib" /MACHINE:X86 /SAFESEH Release\Cs.obj
+         Release\stdafx.obj
+         Создание кода
+     1>c:\git\atalogue\cs\cs.cpp(66): warning C4715: Zastavka::GetKey: значение возвращается не при всех путях выполнения
+         Создание кода завершено
+         Cs.vcxproj -> C:\Git\atalogue\Release\Cs.exe
+     1>Сборка проекта "C:\Git\atalogue\Cs\Cs.vcxproj" завершена (целевые объекты Build).
+
+Сборка успешно завершена.
+
+Затраченное время: 00:00:03.11

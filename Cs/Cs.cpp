@@ -13,7 +13,7 @@ using namespace std;
 #pragma warning(disable: 4996)
 HWND hwnd;
 HDC hdc;
-
+      
 void gotoxy(int xpos, int ypos)
 {
 	COORD scrn;
@@ -92,9 +92,10 @@ public:
 	int GN;
 	int k = 0;
 	void Start(int N){
+		gotoxy(1, 24); printf("1)Удалить     2)Изменить   3)Поиск");
 		pozitsiya = 0;
 		GN = N;
-		while (k != 1)
+		while (k < 1)
 		{
 			Ctrelca();
 			Switsw();
@@ -115,12 +116,15 @@ public:
 	void Print(){}
 	void Switsw(){
 		KeyUp = _getch();
+	//	printf("%d", pozitsiya);
 		switch (KeyUp)
 		{
 		case 72:pozitsiya--; break; //кнопка вверх
-
+		case 49:k = 1; break;
+		case 50:k = 2; break;
+		case 51:k = 4; break;
 		case 80:pozitsiya++; break; //кнопка вниз
-		case 13: k = 1;
+		case 13: k = 3;
 			return;
 			break;
 		}
@@ -138,7 +142,7 @@ public:
 		printf("\n \n                                  КУРСОВОЙ ПРОЕКТ ");
 		printf("\n \n                             Работа с мышью и звуком");
 		printf("\n\n\n\n                                        Руководитель проекта: Шафеева О.П.");
-		printf("\n                                        Разработал студент: Игнатьева A.");
+		printf("\n                                        Разработал студент: Игнатьева A.Я");
 
 		_getch();
 	}
@@ -146,13 +150,14 @@ public:
 class Record{
 public:
 	char Name[10];
-	char Info[40][10];
+	char Info[240][20];
 	int count;
 };
 char a[30];
 class Catalog{
 public:
 	FILE * file;
+	bool bfilile = true;
 	string fileName;
 	vector<Record> record;
 	vector<char *> FileList;
@@ -165,6 +170,8 @@ public:
 			OpenFile(fileName);
 			if (record.size()==0){
 				LoadCatalog();
+				bfilile = false;
+
 			}
 			PrintRecordList();
 		}
@@ -191,40 +198,50 @@ public:
 			fclose(file);
 			PrintCatalogist();
 		}
-Record Preobrazov(char S[], Record ctukt){
-			const char separator[] = " "; //Символы-разделители строки
-			char *Ptr = NULL; //Указатель для функции strtok
 
-			Ptr = strtok(S, separator);
-			int j= 0;
-			while (Ptr)
-			{
-				strcpy(ctukt.Info[j],Ptr);
-				Ptr = strtok(0, separator);
-				j++;
-			}
-			strcpy(ctukt.Info[j + 1], " }");
-			ctukt.count = j+1;
-			return ctukt;
-		}
 	void NewRecord(){
 		char t = ' ';
-		char Text[255];
+		OpenFile(fileName);
+		if (bfilile){ LoadCatalog(); }
+		
+		FILE *f = fopen("temp.txt", "w");
 		Record temp;
 		printf("Название планеты:");
 		scanf("%s", temp.Name);
 		printf("Описание:");
-		int i = 0;
+		int i = 1;
 		while (t !=VK_RETURN)
 		{
 			t = _getch();
 			printf("%c", t);
+			fprintf(f, "%c", t);
 			i++;
-			Text[i] = t;
+		} 
+		fprintf(f, " }");
+		fclose(f); f = fopen("temp.txt", "r"); int j = 0;
+		while (!feof(f))
+		{
+			fscanf(f, "%s", &temp.Info[j]);
+			j++;
 		}
-		Text[i + 1] = '\0';
-		temp =Preobrazov(Text,temp);
+		fclose(f); temp.count = j;
+		//Text[i + 1] = '\0';
+		//gotoxy(3, 5); printf("%s", Text);
+
+		//temp =Preobrazov(Text,temp);
 		record.push_back(temp);
+	}
+	void poisk(){
+		system("cls");
+		char temp[20];
+		printf("Введите слово для поиска:");
+		scanf("%s", &temp);
+		for (int i = 0; i < record.size(); i++){
+			if ((strcmp(temp, record[i].Name)) == 0){
+				PrintRecord(i);
+			}
+		}
+		_getch();
 	}
 	void RecordDelete(int i){
 		record.erase(record.begin() + i);
@@ -235,9 +252,39 @@ Record Preobrazov(char S[], Record ctukt){
 			gotoxy(10, i); printf("%s", record[i].Name);
 		}
 		d.Start(record.size());
+		if (d.k == 1){ RecordDelete(d.pozitsiya); }
+		if (d.k == 2){ Edit(d.pozitsiya); }
+		if (d.k == 4){ poisk(); }
+		if (d.k==3){
+			system("cls");
+			PrintRecord(d.pozitsiya);
+			_getch();
+		}
+		
+	}
+	void Edit(int i){
 		system("cls");
-		PrintRecord(d.pozitsiya);
-		_getch();
+		int j = 0;
+		printf("Переминование(%s):", record[i].Name);
+		scanf("%s", &record[i].Name);
+		for (int u = 0; u < record[i].count; u++) { sprintf(record[i].Info[u], "\0");}
+		FILE *f = fopen("temp.txt", "w");
+		printf("Введите описание:");
+		while (j != 13)
+		{
+			j = getch();
+			printf("%c", j);
+			fprintf(f, "%c", j);
+		}printf("\n");
+		fclose(f); f = fopen("temp.txt", "r"); j = 0;
+		while (!feof(f))
+		{
+			fscanf(f, "%s", &record[i].Info[j]);
+			j++;
+		}
+		record[i].count = j;
+		fclose(f);
+
 	}
 	void PrintCatalogist(){
 		display d;

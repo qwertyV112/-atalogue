@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Avtor">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Cs.cpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Catalog">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAKAAJQAAAAAAAAAAAACAAEABBUECAAAAgBA=</HashCode>
+      <FileName>Cs.cpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="display">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAACCAAAAAAAAgAAAAAAAIAAAAAoCAAAAAEAAI=</HashCode>
+      <FileName>Cs.cpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Menu">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAACCAAAAQAAAgAAAAIQAAAAACAACAAAABAAAI=</HashCode>
+      <FileName>Cs.cpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Record">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAABAAAAAQAAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>Cs.cpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Setting">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Cs.cpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Zastavka">
+    <Position X="7.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAACAQAAAAAAAQAAAAAEAAQACAAgBAAAAA=</HashCode>
+      <FileName>Cs.cpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>
